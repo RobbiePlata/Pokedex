@@ -1,12 +1,13 @@
-import React from 'react';
-import css from '../App.css';
+import React, {useState} from 'react';
+import blank from '../Assets/default.png';
 
 function Portrait(props) {
   const { portrait } = props;
+  const image = portrait ? portrait : blank
   return (
-      <div className="Portrait">
-        <img src={portrait}/>
-      </div>
+    <div className="Portrait">
+      <img src={image}/>
+    </div>
   );
 }
 
