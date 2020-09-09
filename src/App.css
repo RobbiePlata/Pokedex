@@ -22,12 +22,25 @@
   left: 350px;
 }
 
+.Description p{
+  overflow-wrap: break-word;
+  overflow:hidden;
+  position: absolute;
+  font-size: 12px;
+  height: 265px;
+  width: 190px;
+  padding-left: 2px;
+  padding-right: 2px;
+  font-family: 'Comic Sans MS';
+  margin: 0px;
+}
+
 .Portrait {
   border-radius: 5px;
   position: absolute;
   background-color: black;
   top: 116px;
-  left: 41px;
+  left: 40px;
 }
 
 .Portrait img {
@@ -53,21 +66,18 @@
 }
 
 #redButton {
-  background-color: #FF2D00;
+
 }
 
 #yellowButton {
-  background-color: #FBFF00;
   margin-left: 25px;
 }
 
 #greenButton {
-  background-color: #45FF27;
   margin-left: 50px;
 }
 
 #blueButton {
-  background-color: #00E8FF;
   left: 28px;
   top: 8px;
   height: 55px;
