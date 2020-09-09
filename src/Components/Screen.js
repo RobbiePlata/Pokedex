@@ -3,9 +3,7 @@ import css from '../App.css';
 
 function Screen() {
   return (
-      <div className="Screen">
-          <textarea/>
-      </div>
+      <div className="Screen"/>
   );
 }
 
