@@ -1,11 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Provider } from 'react-redux'
 import './App.css';
 import Pokedex from './Containers/Pokedex';
+import store from './store'
+// Consolidate states, integrate into store.
 
 function App() {
   return (
-    <Pokedex/>
+    <Provider store={store}>
+      <Pokedex/>
+    </Provider>
   );
 }
 

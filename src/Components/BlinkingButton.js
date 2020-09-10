@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import css from '../App.css';
 
 function BlinkingButton(props) {
     const [color, setColor] = useState(props.hex)
     useEffect(() => {
         const interval = setInterval(() => {
-            if(color == props.hex){
+            if(color === props.hex){
                 setColor("white");
             }
             else{
