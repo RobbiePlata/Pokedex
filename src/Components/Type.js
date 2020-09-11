@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import TypeWriter from 'react-typewriter';
 
-const typestring = "Macro";
+const typestring = "Sewer Mermaid Hates Black People";
 
 function Type(props){
     return (
         <div className="Type">
             <TypeWriter typing={1}>
-                Type: {typestring}
+                {typestring}
             </TypeWriter>
         </div>
     )
