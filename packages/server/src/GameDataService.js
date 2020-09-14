@@ -10,17 +10,13 @@ class GameDataService {
                 data = JSON.parse(chunk);
             });
             resp.on('end', () => {
-                if(data.isReplay == false){
-                    callback(data)
-                }
-                else{
-                    callback("Not ingame/In Replay");
-                }
+                callback(data)
             });
         }).on("error", (err) => {
             callback("StarCraft II must be open");
         });
     }
+    
 }
 
 module.exports = new GameDataService;

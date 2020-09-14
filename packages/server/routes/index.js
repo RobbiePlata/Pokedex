@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   setTimeout(() => {
     (async() => {
       GameDataService.GetGameData((data) => {
-        res.send(data)
+          res.send(data)
       })
     })()
   }, 1000);
