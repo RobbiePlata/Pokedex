@@ -1,9 +1,8 @@
 {
-    "myName": "placeholder",
+    "myNames": ["Robbie", "TJ"],
     "apiToken": "placeholder",
     "clientID":"placeholder",
     "regionId":1,
     "realmId":1,
     "region":"us"
-
 }
