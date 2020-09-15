@@ -1,0 +1,228 @@
+$ease-out-quint:cubic-bezier(0.230, 1.000, 0.320, 1.000);
+$ease-in-quint:cubic-bezier(0.755, 0.050, 0.855, 0.060);
+$screen-background:#121010;
+
+body {
+  overflow: hidden; /*disable Scrollbar */
+}
+
+.Pokedex {
+  position: absolute;
+  -webkit-user-select: none; /* Safari, Chrome */
+  -khtml-user-select: none; /* Konqueror */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE */
+  user-select: none; /* CSS3 */
+}
+
+.Pokedex-entering {
+  animation-name: slide;
+  animation-duration: 1s;
+}
+
+.Screen {
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+  border-radius: 5px;
+  position: absolute;
+  width: 210px;
+  height: 270px;
+  background-color: #45FF27;
+  top: 125px;
+  left: 340px;
+}
+
+.Description {
+  overflow-wrap: break-word;
+  overflow:hidden;
+  position: absolute;
+  font-family: 'Comic Sans MS';
+  font-size: 12px;
+  font-weight: bold;
+  height: 265px;
+  width: 210px;
+  font-family: 'Comic Sans MS';
+  margin: 0px;
+}
+
+.TypeScreen {
+  border-style: solid;
+  border-width: 3px;
+  border-color: black;
+  font-family: 'Comic Sans MS';
+  border-radius: 5px;
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  background-color: yellow;
+  top: 340px;
+  left: 65px;
+  overflow-wrap: break-word;
+  overflow:hidden;
+}
+
+.TypeScreen .Type {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.Portrait {
+  background:$screen-background;
+  border-radius: 5%;
+  position: absolute;
+  background-color: black;
+  top: 116px;
+  left: 41px;
+  // flicker
+  &::before{
+    content:" ";
+    display:block;
+    position:absolute;
+    background:transparentize($screen-background,0.9);
+    opacity:0;
+    z-index:2;
+    pointer-events:none;
+  }
+  // scanlines
+  &::after{
+    width: 202px;
+    height: 136px;
+    border-radius: 5%; 
+    content:" ";
+    display:block;
+    position:absolute;
+    top:2px;
+    left:2px;
+    right:0px;
+    bottom:0px;
+    background:linear-gradient(transparentize($screen-background,1) 50%, transparentize(darken($screen-background,10),0.75) 50%), linear-gradient(90deg,transparentize(#ff0000,0.94),transparentize(#00ff00,0.98),transparentize(#0000ff,0.94));
+    z-index:2;
+    background-size:100% 2px, 1px 100%;
+    pointer-events:none;
+    overflow: hidden;
+  }
+}
+
+.Portrait::after{
+  animation: flicker .15s infinite;
+}
+
+.Portrait img {
+  animation: turn-on 10s linear;
+  animation-fill-mode:forwards;
+  border-radius: 5%; 
+  object-fit: cover;
+  border: 2px solid black;
+  position: absolute;
+  width: 202px;
+  height: 136px;
+}
+
+.BlinkingButtons button {
+  position: absolute;
+  top: 7px;
+  left: 88px;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.BlinkingButtons button:focus {
+  outline: none;
+}
+
+#yellowButton {
+  margin-left: 25px;
+}
+
+#greenButton {
+  margin-left: 50px;
+}
+
+#blueButton {
+  left: 28px;
+  top: 8px;
+  height: 55px;
+  width: 55px;
+}
+
+@keyframes slide {
+  0% {
+    position: relative; 
+    top: 426px
+  }
+  100% { 
+    position: relative;
+    top: 0px 
+  }
+}
+
+@keyframes turn-on{
+  0%{
+    transform:scale(1,0.1) translate3d(0,0,0);
+    -webkit-filter:brightness(30);
+    filter:brightness(30);
+    opacity:1;
+  }
+  3.5%{
+    transform:scale(1,0.1) translate3d(0,200%,0);
+  }
+  
+  3.6%{
+    transform:scale(1,0.3) translate3d(0,-120%,0);
+    opacity:1;
+  } 
+  
+  9%{
+    transform:scale(1,0.15) translate3d(0,250%,0);
+    -webkit-filter:brightness(30);
+    filter:brightness(30);
+    opacity:0;
+  }
+  11%{
+    transform:scale(1,1) translate3d(0,0,0);
+    -webkit-filter:contrast(0) brightness(0) ;
+    filter:contrast(0) brightness(0);
+    opacity:0;
+  }
+  
+  25%{
+    transform:scale(1,1) translate3d(0,0,0);
+    -webkit-filter:contrast(1) brightness(1.2) saturate(1.3);
+    filter:contrast(1) brightness(1.2) saturate(1.2);
+    opacity:1;
+  }
+}
+
+@keyframes turn-off{
+  0%{
+    transform:scale(1,1.3) translate3d(0,0,0);
+    -webkit-filter:brightness(1);
+    filter:brightness(1);
+    opacity:1;
+  }
+  60%{
+    transform:scale(1.3,0.001) translate3d(0,0,0);
+    -webkit-filter:brightness(10);
+    filter:brightness(10);
+  }
+  100%{
+    animation-timing-function:$ease-in-quint;
+    transform:scale(0.000,0.0001) translate3d(0,0,0);
+    -webkit-filter:brightness(50);
+    filter:brightness(50);
+  }
+}
+
+@keyframes flicker{
+  $steps:20;
+  @for $i from 0 through $steps{
+    #{percentage($i*(1/$steps))}{
+      opacity:random();
+    }
+  }
+}

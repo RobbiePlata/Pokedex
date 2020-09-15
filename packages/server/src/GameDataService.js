@@ -23,6 +23,7 @@ class GameDataService {
             callback("StarCraft II must be open");
         });
     }
+  
     getPlayerInformation(playerName){
         //var = "https://us.api.blizzard.com/sc2/legacy/profile/1/1/2380853/matches?access_token=USYvFLcIcSmH1ICg3GeXjNTTAS5Dw0a74J"
         var sc2Ladder = "http://www.sc2ladder.com/api/player?query="+playerName+"&limit="+1;
@@ -51,9 +52,8 @@ class GameDataService {
                 return result;
             }
         }
-        
-
     }
+  
 }
 
 module.exports = new GameDataService;

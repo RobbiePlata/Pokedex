@@ -4,13 +4,13 @@ import Screen from './Screen'
 import Description from '../Components/Description'
 import Portrait from './Portrait'
 import BlinkingButton from '../Components/BlinkingButton'
-import TypeScreen from '../Components/TypeScreen'
+import TypeScreen from '../Containers/TypeScreen'
 import Type from '../Components/Type'
-import css from '../App.css'
 
-function Pokedex() {
+function Pokedex(props) {
+  const { className } = props;
   return (
-    <div className="Pokedex">
+    <div className={className}>
       <img alt="" src={pokedeximg} />
       <div className="BlinkingButtons">
         <BlinkingButton id="blueButton" hex={"#00E8FF"}/>
@@ -18,14 +18,14 @@ function Pokedex() {
         <BlinkingButton id="yellowButton" hex={"#FBFF00"}/>
         <BlinkingButton id="greenButton" hex={"#45FF27"}/>
       </div>
-      <Portrait/>
-      <TypeScreen>
-        <Type/>
-      </TypeScreen>
-      <Screen>
-        <Description/>
-      </Screen>
-    </div>
+        <Portrait/>
+        <TypeScreen>
+          <Type/>
+        </TypeScreen>
+        <Screen>
+          <Description/>
+        </Screen>
+      </div>
   );
 }
 

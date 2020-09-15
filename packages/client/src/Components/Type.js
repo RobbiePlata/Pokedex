@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import TypeWriter from 'react-typewriter';
 
-const typestring = "Sewer Mermaid";
+const typestring = "Stable Genius";
 
 function Type(props){
     return (
