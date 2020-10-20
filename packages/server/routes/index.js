@@ -4,13 +4,9 @@ var GameDataService = require('../src/GameDataService');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  setTimeout(() => {
-    (async() => {
-      GameDataService.GetGameData((data) => {
-          res.send(data)
-      })
-    })()
-  }, 1000);
+  GameDataService.GetGameData((data) => {
+    res.send(data)
+  })
 });
 
 module.exports = router;

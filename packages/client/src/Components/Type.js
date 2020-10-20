@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TypeWriter from 'react-typewriter';
 
-const typestring = "Stable Genius";
-
 function Type(props){
+    const [ready, setReady] = useState(false);
+    useEffect(()=>{
+        const timeout = setTimeout(() => {
+            setReady(true);
+        }, props.delay)
+        return () => clearTimeout(timeout);
+    });
     return (
-        <div className="Type">
+        <div>
+            { ready && 
             <TypeWriter typing={1}>
-                {typestring}
+                {props.type}
             </TypeWriter>
+            }
         </div>
     )
 }
 
-export default Type;
+export default Type;    
