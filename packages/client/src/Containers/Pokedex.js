@@ -19,7 +19,7 @@ function Pokedex(props) {
       <div className="TypeScreen">
         <TypeScreen>
           <div className="Type">
-            <Type type={"Rare Honorable Macro"} delay={1000}/>
+            <Type type={"Rare Honorable Macro"} delay={2000}/>
           </div>
         </TypeScreen>
       </div>

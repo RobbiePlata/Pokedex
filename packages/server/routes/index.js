@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var GameDataService = require('../src/GameDataService');
+var DataService = require('../src/DataService');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  GameDataService.GetGameData((data) => {
+  DataService.GetGameData((data) => {
     res.send(data)
   })
 });
