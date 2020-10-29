@@ -32,11 +32,16 @@ class DataService {
                 });
                 resp.on('end', () => {
                     if(gamedata.isReplay !== true) {
-                        if(gamedata.players[0].result === 'Undecided'){
-                            resolve(gamedata);
+                        if(gamedata.players.length !== 0) {
+                            if(gamedata.players[0].result === 'Undecided') {
+                                resolve(gamedata);
+                            }
+                            else{
+                                reject("Game is not undecided")
+                            }
                         }
                         else{
-                            reject("Game is not undecided")
+                            reject("No games played yet")
                         }
                     }
                     else{
@@ -58,12 +63,7 @@ class DataService {
                     data = JSON.parse(chunk);
                 });
                 resp.on('end', () => {
-                    if(data.length > 0){
-                        resolve({mmr: data});
-                    }
-                    else{
-                        reject("No opponent mmr data found")
-                    }
+                    resolve({mmr: data});
                 }); 
             }).on("error", (err) => {
                 reject(err);
