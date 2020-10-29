@@ -1,68 +1,94 @@
-var config = require('../resources/config.json');
-var http = require('http');
+const config = require('../resources/config.json');
+const http = require('http');
+const MongoDBClient = require('./MongoDBClient');
 
 class DataService {
-
-    async GetGameData(callback) {
-        var gameurl = "http://localhost:6119/game"; //StarCraft 2 Port
-        var data;
-        http.get(gameurl, (resp) => {
-            resp.on('data', (chunk) => {
-                data = JSON.parse(chunk);
+    
+    async GetAllData() {
+        return new Promise((resolve, reject) => {
+            this.GetGameData()
+            .then((gamedata) => {
+                this.RetrieveOpponentData(gamedata)
+                .then((opponent) => {
+                    resolve(opponent);
+                })
+                .catch((err) => {
+                    reject(err);
+                });
+             })
+            .catch((err) => {
+                reject(err);
             });
-            resp.on('end', () => {
-                if(data.players[0].result !== 'Victory' 
-                && data.players[0].result !== 'Defeat' 
-                && data.isReplay !== true){
-                    this.RetrieveOpponentMMR(data, (ladder) => {
-                        callback({...data, ...ladder});
-                    });
-                }
-                else{
-                    callback({})
-                }
-            });
-        }).on("error", (err) => {
-            console.log("StarCraft must be open");
-            callback({});
         });
     }
 
-    async RetrieveMMR(playerName, callback){
-        var sc2Ladder = `http://www.sc2ladder.com/api/player?query=${playerName}&limit=` + 1;
-        var data;
-        http.get(sc2Ladder, (resp) => {
-            resp.on('data', (chunk) => {
-                data = JSON.parse(chunk);
+    async GetGameData() {
+        return new Promise((resolve, reject) => {
+            var gameurl = "http://localhost:6119/game"; //StarCraft 2 Port
+            var gamedata;
+            http.get(gameurl, (resp) => {
+                resp.on('data', (chunk) => {
+                    gamedata = JSON.parse(chunk);
+                });
+                resp.on('end', () => {
+                    if(gamedata.isReplay !== true) {
+                        if(gamedata.players[0].result === 'Undecided'){
+                            resolve(gamedata);
+                        }
+                        else{
+                            reject("Game is not undecided")
+                        }
+                    }
+                    else{
+                        reject("Currently in replay")
+                    }
+                });
+            }).on("error", (err) => {
+                reject("StarCraft must be open. ", err);
             });
-            resp.on('end', () => {
-                callback({mmr: data});
-            });
-        }).on("error", (err) => {
-            console.log("Error Retrieving Player information")
-            callback({});
-        });
+        })
     }
 
-    async RetrieveOpponentMMR(data, callback) {
-        var players = data.players;
-        if(players.length == 2){
-            for (var index in players) {
-                if (!config.myNames.includes(players[index].name)) { // Get opposing player
-                    this.RetrieveMMR(players[index].name, (mmr) => {
-                        callback(mmr);
-                    });
+    async RetrieveMMR(playerName){
+        return new Promise((resolve, reject) => {
+            var sc2Ladder = `http://www.sc2ladder.com/api/player?query=${playerName}&limit=` + 1;
+            var data;
+            http.get(sc2Ladder, (resp) => {
+                resp.on('data', (chunk) => {
+                    data = JSON.parse(chunk);
+                });
+                resp.on('end', () => {
+                    if(data.length > 0){
+                        resolve({mmr: data});
+                    }
+                    else{
+                        reject("No opponent mmr data found")
+                    }
+                }); 
+            }).on("error", (err) => {
+                reject(err);
+            });
+        })
+    }
+
+    async RetrieveOpponentData(data) {
+        return new Promise((resolve, reject) => {
+            var players = data.players;
+            if(players.length == 2) {
+                if(config.myNames.length > 0) {
+                    if (players[0].name !== players[1].name) {
+                        var opponentdata = !config.myNames.includes(players[0].name) ? players[0] : players[1];
+                        this.RetrieveMMR(opponentdata.name).then((mmr) => {
+                            resolve({...opponentdata, ...mmr});
+                        })
+                        .catch((err) => { reject(err); });
+                    } 
+                    else{ reject("Opponent name matches a config name"); }
                 }
+                else{ reject("No names found in config"); }
             }
-        }
-        else{
-            callback({})
-        }
-        
-    }
-
-    async RetrieveOpponentData() {
-
+            else { reject("Game does not contain exactly 2 players"); }
+        })
     }
 
 }
