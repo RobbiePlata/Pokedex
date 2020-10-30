@@ -13,15 +13,21 @@ class MongoDBClient {
   }
   
   async Connect() {
-    this.client.connect((err, client) => {
-      if(!err) this.db = client.db;
-      else console.log(err)
+    return new Promise((resolve, reject) => {
+      return this.client.connect((err, client) => {
+        if(err) { reject(err); }
+        else{ 
+          this.client = client; 
+          this.db = client.db(this.dbname);
+          resolve(client);
+        }
+      })
     })
   }
 
   async FindDocuments(collectionname, filter) {
     return new Promise((resolve, reject) => {
-      const collection = this.client.db(this.dbname).collection(collectionname);
+      const collection = this.db.collection(collectionname);
       collection.find(filter).toArray((err, docs) => {
         if(err) reject(err);
         if(docs.length > 0){
