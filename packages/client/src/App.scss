@@ -16,8 +16,17 @@ body {
 }
 
 .Pokedex-entering {
-  animation-name: slide;
+  animation-name: slide;  
   animation-duration: 1s;
+}
+
+.Pokedex-exiting {
+  animation-name: slideout;
+  animation-duration: 1s;
+}
+
+.Pokedex-exited {
+  top: 426px;
 }
 
 .Screen {
@@ -40,10 +49,6 @@ body {
 
 #rating{ 
   margin-bottom: 10px;
-}
-
-#desc {
-
 }
 
 .Description {
@@ -172,6 +177,17 @@ body {
   100% { 
     position: relative;
     top: 0px 
+  }
+}
+
+@keyframes slideout {
+  0% {
+    position: relative; 
+    top: 0px
+  }
+  100% { 
+    position: relative;
+    top: 426px 
   }
 }
 

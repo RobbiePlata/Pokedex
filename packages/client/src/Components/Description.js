@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import TypeWriter from 'react-typewriter';
 
-
 function Description(props) {
     const [ready, setReady] = useState(false);
     var { name, rating, desc, delay } = props;

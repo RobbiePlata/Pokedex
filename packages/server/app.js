@@ -7,7 +7,6 @@ var cors = require("cors");
 
 // Create new routers as needed
 var indexRouter = require('./routes/index');
-
 var app = express();
 
 // view engine setup

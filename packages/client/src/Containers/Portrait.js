@@ -1,18 +1,11 @@
-import React, { useState, useEffect, lazy, Suspense} from 'react';
+import React, { useEffect, useState } from 'react';
 import blank from '../Assets/default.png';
 
 function Portrait(props) {
-  const image = props.src ? props.src : blank
-  const [src, setSrc] = useState(image);
-  const [error, setError] = useState(false);
-  const onError = () => {
-    if (!error) {
-      setSrc(blank)
-      setError(true)
-    };
-  }
+  const { src } = props;
+  const image = src !== undefined ? src : blank;
   return (
-      <img alt={blank} onError={onError} src={src}/>
+      <img href={blank} src={image}/>
   );
 }
 
