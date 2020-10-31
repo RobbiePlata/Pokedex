@@ -31,14 +31,14 @@ function App() {
   }
   
   useEffect(() => {
-    fetchURL();
+    fetchURL(); 
     setInterval(() => {
       fetchURL();
-    }, 10000);
+    }, 5000);
   }, [])
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return <div></div>;
   } else if (!isLoaded || empty) {
     return <div></div>;
   } else if (isLoaded && !empty) {

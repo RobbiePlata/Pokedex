@@ -16,7 +16,8 @@
     "react-transition-group": "^4.4.1",
     "react-typewriter": "^0.4.1",
     "redux": "^4.0.5",
-    "sass": "^1.26.10"
+    "sass": "^1.26.10",
+    "speak-tts": "^2.0.8"
   },
   "scripts": {
     "start": "react-scripts start",

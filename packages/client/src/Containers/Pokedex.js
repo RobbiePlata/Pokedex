@@ -18,7 +18,7 @@ function Pokedex(props) {
       <div className="TypeScreen">
         <TypeScreen>
           <div className="Type">
-            <Type type={items.type} delay={2000}/>
+            <Type type={items.type} delay={1000}/>
           </div>
         </TypeScreen>
       </div>
@@ -31,7 +31,7 @@ function Pokedex(props) {
       <div className="Screen">
         <Screen>
           <div className="Description">
-            <Description name={items.name} rating={items.rating} desc={items.description}/>
+            <Description delay={1500} items={items}/>
           </div>
         </Screen>
       </div>
