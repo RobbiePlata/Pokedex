@@ -15,10 +15,11 @@ function Description(props) {
     };
 
     var { delay } = props;
-    var { name, type, rating, description } = props.items;
+    var { name, type, ladder, description } = props.items;
     const [ready, setReady] = useState(false);
-    if(rating == undefined) rating = "Unknown"
-    if(delay == undefined){
+    var rating = ladder !== undefined ? "Rating: " + JSON.stringify(ladder.mmr) : ""
+    var record = ladder !== undefined ? JSON.stringify(ladder.wins) + "-" + JSON.stringify(ladder.losses) : ""
+    if(delay === undefined){
         delay = 1000;
     }
 
@@ -27,19 +28,24 @@ function Description(props) {
         const timeout = setTimeout(() => {
             setReady(true);
             speech.init(settings).then(() => {
-                speech.speak({text: name + ". Is " + plurality + type + " rated at " + rating + ". " + description})
+                if (ladder) {
+                    speech.speak({text: name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description})
+                }
+                else {
+                    speech.speak({text: name + ". Is " + plurality + type + " type. " + description})
+                }
             })
         }, delay)
         return () => clearTimeout(timeout);
     }, []);
-
 
     return (
         <div>
             {ready && 
             <TypeWriter typing={1} maxDelay={50}>
                 <div id="name">{name}</div>
-                <div id="rating">Rating: {rating}</div>
+                <div id="rating">{rating}</div>
+                <div id="record">{record}</div>
                 <div id="desc">{description}</div>
             </TypeWriter>
             }

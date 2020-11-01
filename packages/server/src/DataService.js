@@ -28,24 +28,27 @@ class DataService {
             var gamedata;
             http.get(gameurl, (resp) => {
                 resp.on('data', (chunk) => {
-                    gamedata = JSON.parse(chunk);
+                    try{ gamedata = JSON.parse(chunk); }
+                    catch{ reject("Cannot parse game data."); }
                 });
                 resp.on('end', () => {
-                    if(gamedata.isReplay !== true) {
-                        if(gamedata.players.length !== 0) {
-                            if(gamedata.players[0].result === 'Undecided') {
-                                resolve(gamedata);
+                    if(gamedata) {
+                        if(gamedata.isReplay !== true) {
+                            if(gamedata.players.length !== 0) {
+                                if(gamedata.players[0].result === 'Undecided') {
+                                    resolve(gamedata);
+                                }
+                                else{
+                                    reject("Game is not undecided.")
+                                }
                             }
                             else{
-                                reject("Game is not undecided")
+                                reject("No games played yet.")
                             }
                         }
                         else{
-                            reject("No games played yet")
+                            reject("Currently in replay.")
                         }
-                    }
-                    else{
-                        reject("Currently in replay")
                     }
                 });
             }).on("error", (err) => {
@@ -63,7 +66,7 @@ class DataService {
                     data = JSON.parse(chunk);
                 });
                 resp.on('end', () => {
-                    resolve({mmr: data});
+                    resolve({ladder: data[0]});
                 }); 
             }).on("error", (err) => {
                 reject(err);

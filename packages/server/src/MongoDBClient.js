@@ -19,6 +19,7 @@ class MongoDBClient {
         else{ 
           this.client = client; 
           this.db = client.db(this.dbname);
+          console.log("Connected to database.");
           resolve(client);
         }
       })
@@ -34,7 +35,7 @@ class MongoDBClient {
           resolve(docs[0]);
         }
         else{
-          reject("Player name not in DB");
+          reject("Player name not in DB.");
         }
       });
     });

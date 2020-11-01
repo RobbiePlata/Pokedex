@@ -35,7 +35,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  console.log(err.status)
+  console.log("Not connected to database.")
+  res.render('emptyjson');
 });
 
 module.exports = app;
