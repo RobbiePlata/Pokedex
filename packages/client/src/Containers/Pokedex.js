@@ -6,8 +6,18 @@ import Portrait from './Portrait'
 import BlinkingButton from '../Components/BlinkingButton'
 import TypeScreen from '../Containers/TypeScreen'
 import Type from '../Components/Type'
+import {resetDescTyping} from '../actions/descriptionActions';
+import {resetTypeTyping} from '../actions/typeActions';
+import { useDispatch } from 'react-redux';
 
 function Pokedex(props) { 
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(resetDescTyping())
+    dispatch(resetTypeTyping())
+  }, [dispatch])
+
   const { className, items } = props;
   return (
     <div className={className}>
@@ -18,7 +28,7 @@ function Pokedex(props) {
       <div className="TypeScreen">
         <TypeScreen>
           <div className="Type">
-            <Type type={items.type} delay={1000}/>
+            <Type type={items.type} delay={2500}/>
           </div>
         </TypeScreen>
       </div>
@@ -31,7 +41,7 @@ function Pokedex(props) {
       <div className="Screen">
         <Screen>
           <div className="Description">
-            <Description delay={1000} items={items}/>
+            <Description voiceDelay={1000} items={items}/>
           </div>
         </Screen>
       </div>

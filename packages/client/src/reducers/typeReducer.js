@@ -1,17 +1,23 @@
 const initialState = {
-    ready: true,
-    complete: false
+    start: false,
+    finished: false
 }
 
-const typeReducer = (state={}, action) => {
+const typeReducer = (state=initialState, action) => {
     switch(action.type){
-        case "IS_READY": {
-            state = {...state, ready: action.payload}
-            break;
+        case "START_TYPING_TYPE": {
+            return {...state, 
+                start: true,
+                finished: false
+            }
         }
-        case "Complete": {
-            state = {...state, complete: action.payload}
-            break;
+        case "FINISH_TYPING_TYPE": {
+            return {...state, 
+                finished: true
+            }
+        }
+        case "RESET_TYPING_TYPE": {
+            return {...state, ...initialState }
         }
     }
     return state;

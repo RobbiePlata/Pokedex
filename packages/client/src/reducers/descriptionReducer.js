@@ -1,20 +1,26 @@
 const initialState = {
-    ready: true,
-    complete: false
+    start: false,
+    finished: false
 }
 
 const descriptionReducer = (state=initialState, action) => {
     switch(action.type){
-        case "IS_READY": {
-            state = {...state, ready: action.payload}
-            break;
+        case "START_TYPING_DESCRIPTION": {
+            return {...state, 
+                start: true,
+                finished: false
+            }
         }
-        case "Complete": {
-            state = {...state, complete: action.payload}
-            break;
+        case "FINISH_TYPING_DESCRIPTION": {
+            return {...state, 
+                finished: true
+            }
+        }
+        case "RESET_TYPING_DESCRIPTION": {
+            return {...state, ...initialState }
         }
     }
     return state;
-};
+}
 
 export default descriptionReducer;

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import TypeWriter from 'react-typewriter';
 import Speech from "speak-tts";
+import { startTyping, finishTyping } from '../actions/descriptionActions';
 
 function Description(props) {
     
     const speech = new Speech();
+
     const settings = {
         volume: .5,
         lang: "en-US",
@@ -14,37 +17,47 @@ function Description(props) {
         splitSentences: false
     };
 
-    var { delay } = props;
+    var dispatch = useDispatch();
+    var typeData = useSelector(state => state.type);
+    var { finished } = typeData;
+    var { voiceDelay } = props;
+    if(voiceDelay === undefined){
+        voiceDelay = 1000;
+    }
     var { name, type, ladder, description } = props.items;
     var rating = ladder !== undefined ? "Rating: " + JSON.stringify(ladder.mmr) : ""
     var record = ladder !== undefined ? JSON.stringify(ladder.wins) + "-" + JSON.stringify(ladder.losses) : ""
-    if(delay === undefined){
-        delay = 1000;
-    }
+    
 
     useEffect(() => {
+        if(finished){
+            dispatch(startTyping());
+            Speak();
+        }
+    },[finished, dispatch])
+
+    function Speak() {
         var plurality = type.includes('Uncommon') ? 'an ' : 'a ';
-        const timeout = setTimeout(() => {
-            speech.init(settings).then(() => {
-                if (ladder) {
-                    speech.speak({text: name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description})
-                }
-                else {
-                    speech.speak({text: name + ". Is " + plurality + type + " type. " + description})
-                }
-            })
-        }, delay)
-        return () => clearTimeout(timeout);
-    }, []);
+        speech.init(settings).then(() => {
+            if (ladder) {
+                speech.speak({text: name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description})
+            }
+            else {
+                speech.speak({text: name + ". Is " + plurality + type + " type. " + description})
+            }
+        })
+    }
 
     return (
         <div>
-            <TypeWriter typing={1} maxDelay={50}>
+            { finished && 
+            <TypeWriter typing={1} maxDelay={80} onTypingEnd={() => dispatch(finishTyping())}>
                 <div id="name">{name}</div>
                 <div id="rating">{rating}</div>
                 <div id="record">{record}</div>
                 <div id="desc">{description}</div>
             </TypeWriter>
+            }
         </div>
     );
 }   
