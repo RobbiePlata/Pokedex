@@ -5,18 +5,17 @@ import Speech from "speak-tts";
 function Description(props) {
     
     const speech = new Speech();
-    
     const settings = {
         volume: .5,
         lang: "en-US",
         rate: 1,
         pitch: 1,
-        voice: "Microsoft Guy Online (Natural) - English (United States)"
+        voice: "Microsoft Guy Online (Natural) - English (United States)",
+        splitSentences: false
     };
 
     var { delay } = props;
     var { name, type, ladder, description } = props.items;
-    const [ready, setReady] = useState(false);
     var rating = ladder !== undefined ? "Rating: " + JSON.stringify(ladder.mmr) : ""
     var record = ladder !== undefined ? JSON.stringify(ladder.wins) + "-" + JSON.stringify(ladder.losses) : ""
     if(delay === undefined){
@@ -26,7 +25,6 @@ function Description(props) {
     useEffect(() => {
         var plurality = type.includes('Uncommon') ? 'an ' : 'a ';
         const timeout = setTimeout(() => {
-            setReady(true);
             speech.init(settings).then(() => {
                 if (ladder) {
                     speech.speak({text: name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description})
@@ -41,14 +39,12 @@ function Description(props) {
 
     return (
         <div>
-            {ready && 
             <TypeWriter typing={1} maxDelay={50}>
                 <div id="name">{name}</div>
                 <div id="rating">{rating}</div>
                 <div id="record">{record}</div>
                 <div id="desc">{description}</div>
             </TypeWriter>
-            }
         </div>
     );
 }   

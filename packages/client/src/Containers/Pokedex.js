@@ -31,7 +31,7 @@ function Pokedex(props) {
       <div className="Screen">
         <Screen>
           <div className="Description">
-            <Description delay={1500} items={items}/>
+            <Description delay={1000} items={items}/>
           </div>
         </Screen>
       </div>

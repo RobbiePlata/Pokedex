@@ -1,58 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import { Provider } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 import './App.scss';
 import Pokedex from './Containers/Pokedex';
-import store from './store'
 import { Transition } from 'react-transition-group'
+import { enter, fetchItems, isEmpty } from './actions/appActions'
 // Consolidate states, integrate into store.
 
 function App() {    
-  
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState("{}");
-  const [empty, setEmpty] = useState(true);
-  const [entered, setEntered] = useState(true);
-  
-  function fetchURL() {
-    fetch("http://localhost:3001/")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          setIsLoaded(true);
-          setItems(result);
-          setEmpty(JSON.stringify(result) === "{}");
-        },
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-        } 
-      )
-  }
-  
-  useEffect(() => {
-    fetchURL(); 
-    setInterval(() => {
-      fetchURL();
-    }, 5000);
-  }, [])
 
-  if (error) {
-    return <div></div>;
-  } else if (!isLoaded || empty) {
-    return <div></div>;
-  } else if (isLoaded && !empty) {
+  var dispatch = useDispatch()
+  var data = useSelector(state => state.app)
+  var { fetching, fetched, items, entered, error } = data;
+
+  useEffect(() => {
+    dispatch(fetchItems())
+    setInterval(() => {
+      dispatch(fetchItems());
+    }, 5000);
+  }, [dispatch]);
+
+  if(error || !fetched) {
+    return <div></div>
+  }
+  else if (fetched && JSON.stringify(items.data) === "{}") {
+    return <div></div>
+  }
+  else if (fetched && JSON.stringify(items.data) !== "{}") {
     return (
-      <Provider store={store}>
-        <Transition timeout={1000} in={entered} unmountOnExit={true} appear>
-          {(status) => (
-            <Pokedex className={`Pokedex Pokedex-${status}`} items={items}/>
-          )}
-        </Transition>
-      </Provider>
+      <Transition timeout={1000} in={true} unmountOnExit={true} appear>
+        {(status) => (
+          <Pokedex className={`Pokedex Pokedex-${status}`} items={items.data}/>
+        )}
+      </Transition>
     );
   }
-  
 }
 
 export default App;
