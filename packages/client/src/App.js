@@ -4,6 +4,8 @@ import './App.scss';
 import Pokedex from './Containers/Pokedex';
 import { Transition } from 'react-transition-group'
 import { enter, fetchItems, isEmpty } from './actions/appActions'
+import { resetDescTyping, resetSpeech } from './actions/descriptionActions';
+import { resetTypeTyping } from './actions/typeActions';
 // Consolidate states, integrate into store.
 
 function App() {    
@@ -18,14 +20,23 @@ function App() {
       dispatch(fetchItems());
     }, 5000);
   }, [dispatch]);
+  
+  function ClearStates() {
+    dispatch(resetDescTyping())
+    dispatch(resetTypeTyping())
+    dispatch(resetSpeech())
+  }
 
   if(error || !fetched) {
+    ClearStates()
     return <div></div>
   }
   else if (fetched && JSON.stringify(items.data) === "{}") {
+    ClearStates()
     return <div></div>
   }
   else if (fetched && JSON.stringify(items.data) !== "{}") {
+
     return (
       <Transition timeout={1000} in={true} unmountOnExit={true} appear>
         {(status) => (

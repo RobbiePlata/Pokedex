@@ -7,8 +7,7 @@ const typeReducer = (state=initialState, action) => {
     switch(action.type){
         case "START_TYPING_TYPE": {
             return {...state, 
-                start: true,
-                finished: false
+                start: true
             }
         }
         case "FINISH_TYPING_TYPE": {

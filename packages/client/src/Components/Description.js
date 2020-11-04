@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import TypeWriter from 'react-typewriter';
 import Speech from "speak-tts";
 import { startTyping, finishTyping } from '../actions/descriptionActions';
+import { startSpeech, finishSpeech } from '../actions/descriptionActions';
 
 function Description(props) {
     
@@ -34,18 +35,20 @@ function Description(props) {
             dispatch(startTyping());
             Speak();
         }
-    },[finished, dispatch])
+    },[finished])
 
     function Speak() {
         var plurality = type.includes('Uncommon') ? 'an ' : 'a ';
+        var phrase = ladder ? (name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description) : (name + ". Is " + plurality + type + " type. " + description);
         speech.init(settings).then(() => {
-            if (ladder) {
-                speech.speak({text: name + ". Is " + plurality + type + " type, "+ " rated at " + rating + ". " + description})
-            }
-            else {
-                speech.speak({text: name + ". Is " + plurality + type + " type. " + description})
-            }
-        })
+            speech.speak({ 
+                text: phrase, 
+                listeners: {
+                    onstart: () => { dispatch(startSpeech()) },
+                    onend: () => { dispatch(finishSpeech()) }
+                }
+            });
+        });
     }
 
     return (

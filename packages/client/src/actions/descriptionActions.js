@@ -15,3 +15,21 @@ export function resetDescTyping() {
         type: "RESET_TYPING_DESCRIPTION"
     }
 }
+
+export function startSpeech() {
+    return {
+        type: "START_SPEECH"
+    }
+}
+
+export function finishSpeech() {
+    return {
+        type: "FINISH_SPEECH"
+    }
+}
+
+export function resetSpeech() {
+    return {
+        type: "RESET_SPEECH"
+    }
+}

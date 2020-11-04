@@ -6,7 +6,7 @@ import Portrait from './Portrait'
 import BlinkingButton from '../Components/BlinkingButton'
 import TypeScreen from '../Containers/TypeScreen'
 import Type from '../Components/Type'
-import {resetDescTyping} from '../actions/descriptionActions';
+import {resetDescTyping, resetSpeech } from '../actions/descriptionActions';
 import {resetTypeTyping} from '../actions/typeActions';
 import { useDispatch } from 'react-redux';
 
@@ -16,6 +16,7 @@ function Pokedex(props) {
   useEffect(() => {
     dispatch(resetDescTyping())
     dispatch(resetTypeTyping())
+    dispatch(resetSpeech())
   }, [dispatch])
 
   const { className, items } = props;
