@@ -2,7 +2,7 @@ import React from 'react';
 
 function Screen(props) {
   return (
-    <div>{props.children}</div>
+    <div className="Screen">{props.children}</div>
   );
 }
 

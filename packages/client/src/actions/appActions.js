@@ -7,16 +7,26 @@ export function fetchItems() {
     }
 }
 
-export function enter() {
+export function itemsFilled() {
     return {
-        type: "ENTER",
-        payload: true
+        type: "ITEMS_FILLED"
     }
 }
 
-export function currentStatus(payload) {
+export function itemsEmpty() {
     return {
-        type: "ENTER",
-        payload: payload
+        type: "ITEMS_EMPTY"
+    }
+}
+
+export function enterTransition() {
+    return {
+        type: "ENTER_TRANSITION"
+    }
+}
+
+export function exitTransition() {
+    return {
+        type: "EXIT_TRANSITION"
     }
 }

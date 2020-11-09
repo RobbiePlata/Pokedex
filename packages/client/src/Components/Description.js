@@ -35,7 +35,7 @@ function Description(props) {
             dispatch(startTyping());
             Speak();
         }
-    },[finished])
+    }, [finished])
 
     function Speak() {
         var plurality = type.includes('Uncommon') ? 'an ' : 'a ';
@@ -52,7 +52,7 @@ function Description(props) {
     }
 
     return (
-        <div>
+        <div className="Description">
             { finished && 
             <TypeWriter typing={1} maxDelay={80} onTypingEnd={() => dispatch(finishTyping())}>
                 <div id="name">{name}</div>

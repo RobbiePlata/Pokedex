@@ -2,7 +2,7 @@ import React from 'react';
 
 function TypeScreen(props){
     return (
-        <div>{props.children}</div>
+        <div className="TypeScreen">{props.children}</div>
     )
 }
 

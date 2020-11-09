@@ -16,7 +16,7 @@ function Type(props){
     }, [dispatch]);
 
     return (
-        <div>
+        <div className="Type">
             { start && 
             <TypeWriter typing={1} onTypingEnd={() => dispatch(finishTyping())}>
                 {props.type}

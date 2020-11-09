@@ -5,7 +5,9 @@ function Portrait(props) {
   const { src } = props;
   const image = src !== undefined ? src : blank;
   return (
+    <div className="Portrait">  
       <img href={blank} src={image}/>
+    </div>
   );
 }
 

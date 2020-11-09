@@ -2,9 +2,9 @@ const initialState = {
     fetching: false,
     fetched: false,
     error: false,
-    items: "{}",
-    empty: true,
-    enter: true
+    items: {},
+    enter: false,
+    empty: true
 }
 
 const appReducer = (state=initialState, action) => {
@@ -27,11 +27,27 @@ const appReducer = (state=initialState, action) => {
                 items: action.payload 
             }
         }
-        case "ENTER": {
+        case "ITEMS_FILLED": {
             return {...state,
-                 enter: action.payload
+                empty: false
             }
         }
+        case "ITEMS_EMPTY": {
+            return {...state,
+                empty: true
+            }
+        }
+        case "ENTER_TRANSITION": {
+            return {...state,
+                enter: true
+            }
+        }
+        case "EXIT_TRANSITION": {
+            return {...state,
+                enter: false
+            }
+        }
+        
     }
     return state;
 }
