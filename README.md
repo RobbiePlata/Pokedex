@@ -46,3 +46,4 @@ validator: {
     }
   }
   ```
+![example](packages/client/public/example.gif)
