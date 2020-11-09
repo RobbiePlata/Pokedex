@@ -9,11 +9,16 @@ cd pokedex
 yarn install
 ```
 ```
-packages/server/.env -> 
+/packages/server/.env -> 
 MONGOUSERNAME="yourusername"
 MONGOPASSWORD="yourpassword"
 DBNAME="yourdbname"
 ```
+```
+/packages/server/resources/config ->
+"myNames": "scnickname"
+```
+
 ![MongoDB](https://i.imgur.com/pUOSIkm.png)
 ## MongoDB Player Schema
 ```
