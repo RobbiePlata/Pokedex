@@ -18,7 +18,7 @@ DBNAME="yourdbname"
 /packages/server/resources/config ->
 "myNames": "scnickname"
 ```
-
+![example](packages/client/public/example.gif)
 ![MongoDB](https://i.imgur.com/pUOSIkm.png)
 ## MongoDB Player Schema
 ```
@@ -51,4 +51,3 @@ validator: {
     }
   }
   ```
-![example](packages/client/public/example.gif)
